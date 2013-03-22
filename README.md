@@ -8,6 +8,9 @@ Golang wrapped version of Gordon's Arduino-like WiringPi for the Raspberry Pi
 install WiringPi first
 
 ```
+cd WiringPi\wiringPi
+sudo make install
+
 go get github.com/hugozhu/rpi
 ```
 
