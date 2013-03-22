@@ -18,7 +18,6 @@ static void my_digitalWrite(int p, int m) {
 import "C"
 
 import (
-	"log"
 	"time"
 )
 
