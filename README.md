@@ -2,3 +2,29 @@ WiringPi-Go
 ============
 
 Golang wrapped version of Gordon's Arduino-like WiringPi for the Raspberry Pi
+
+# INSTALLATION
+
+install WiringPi first
+
+```
+go get github.com/hugozhu/rpi
+```
+
+# Example
+
+```
+package main
+
+import (
+    . "github.com/hugozhu/rpi"
+)
+
+func main() {
+    WiringPiSetup()
+    PinMode(4, OUTPUT)
+    DigitalWrite(4, LOW)
+    Delay(400)
+    DigitalWrite(4, HIGH)
+}
+```
