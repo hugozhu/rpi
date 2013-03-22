@@ -1,4 +1,4 @@
-package main
+package rpi
 
 /*
 #cgo LDFLAGS: -lwiringPi
