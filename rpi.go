@@ -7,6 +7,13 @@ package main
 #include <stdio.h>
 #include <stdlib.h>
 
+static void my_pinMode(int p, int m) {
+    pinMode(p,m);
+}
+
+static void my_digitalWrite(int p, int m) {
+    digitalWrite(p,m);
+}
 */
 import "C"
 
@@ -29,11 +36,11 @@ func WiringPiSetup() {
 }
 
 func PinMode(port int, mode int) {
-	C._pinMode(C.int(port), C.int(mode))
+	C.my_pinMode(C.int(port), C.int(mode))
 }
 
 func DigitalWrite(port int, mode int) {
-	C._digitalWrite(C.int(port), C.int(mode))
+	C.my_digitalWrite(C.int(port), C.int(mode))
 }
 
 func Delay(ms int) {
