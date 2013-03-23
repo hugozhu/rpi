@@ -38,8 +38,9 @@ wiringPi   | Name     | GPIO.BOARD    | GPIO.BCM
 
 more to read at: [http://hugozhu.myalert.info/2013/03/22/19-raspberry-pi-gpio-port-naming.html](http://hugozhu.myalert.info/2013/03/22/19-raspberry-pi-gpio-port-naming.html)
 
-# Example
+# Sample codes
 
+## lcd.go
 ```
 package main
 
@@ -49,9 +50,31 @@ import (
 
 func main() {
     WiringPiSetup()
-    PinMode(4, OUTPUT)
-    DigitalWrite(4, LOW)
+
+    //use default pin naming
+    PinMode(PIN_GPIO_4, OUTPUT)
+    DigitalWrite(PIN_GPIO_4, LOW)
     Delay(400)
-    DigitalWrite(4, HIGH)
+    DigitalWrite(PIN_GPIO_4, HIGH)
+
+    //use raspberry pi board pin numbering, similiar to RPi.GPIO.setmode(GPI.BOARD)
+    Delay(400)
+    DigitalWrite(BoardToPin(16), LOW)
+    Delay(400)
+    DigitalWrite(BoardToPin(16), HIGH)
+
+    //use raspberry pi board pin numbering, similiar to RPi.GPIO.setmode(GPI.BCM)
+    Delay(400)
+    DigitalWrite(GpioToPin(23), LOW)
+    Delay(400)
+    DigitalWrite(GpioToPin(23), HIGH)
 }
+```
+
+## Run
+
+```
+export GOPATH=`pwd`
+go install github.com/hugozhu/rpi 
+go run src/lcd.go 
 ```
