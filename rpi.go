@@ -14,12 +14,21 @@ static void my_pinMode(int p, int m) {
 static void my_digitalWrite(int p, int m) {
     digitalWrite(p,m);
 }
+
+static int my_digitalRead(int p) {
+    return digitalRead(p);
+}
 */
 import "C"
 
 import (
 	"fmt"
 	"time"
+)
+
+const (
+	VERSION = "0.1"
+	AUTHOR  = "@hugozhu"
 )
 
 var (
@@ -165,25 +174,27 @@ func WiringPiSetup() {
 	}
 }
 
-// Better to stick to one GPIO numbering, not use other setup methods for now
+/*
+ * Better to stick to one GPIO numbering, not use other setup methods for now
+ *
+func WiringPiSetupGpio() {
+	if -1 == int(C.wiringPiSetupSys()) {
+		panic("Failed to setup Pi")
+	}
+}
 
-// func WiringPiSetupGpio() {
-// 	if -1 == int(C.wiringPiSetupSys()) {
-// 		panic("Failed to setup Pi")
-// 	}
-// }
+func WiringPiSetupSys() {
+	if -1 == int(C.wiringPiSetupSys()) {
+		panic("Failed to setup Pi")
+	}
+}
 
-// func WiringPiSetupSys() {
-// 	if -1 == int(C.wiringPiSetupSys()) {
-// 		panic("Failed to setup Pi")
-// 	}
-// }
-
-// func WiringPiSetupPiFace() {
-// 	if -1 == int(C.wiringPiSetupPiFace()) {
-// 		panic("Failed to setup Pi")
-// 	}
-// }
+func WiringPiSetupPiFace() {
+	if -1 == int(C.wiringPiSetupPiFace()) {
+		panic("Failed to setup Pi")
+	}
+}
+*/
 
 func PinMode(pin int, mode int) {
 	C.my_pinMode(C.int(pin), C.int(mode))
@@ -191,6 +202,10 @@ func PinMode(pin int, mode int) {
 
 func DigitalWrite(pin int, mode int) {
 	C.my_digitalWrite(C.int(pin), C.int(mode))
+}
+
+func DigitalRead(pin int) int {
+	return int(C.my_digitalRead(C.int(pin)))
 }
 
 func Delay(ms int) {
