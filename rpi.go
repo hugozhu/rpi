@@ -22,6 +22,24 @@ import (
 )
 
 const (
+	GP0  = 0
+	GP1  = 1
+	GP2  = 2
+	GP3  = 3
+	GP4  = 4
+	GP5  = 5
+	GP6  = 6
+	GP7  = 7
+	SDA  = 8
+	SCL  = 9
+	CE0  = 10
+	CE1  = 11
+	MOSI = 12
+	MOSO = 13
+	SCLK = 14
+	TXD  = 15
+	RXD  = 16
+
 	WPI_MODE_PINS          = C.WPI_MODE_PINS
 	WPI_MODE_GPIO          = C.WPI_MODE_GPIO
 	WPI_MODE_GPIO_SYS      = C.WPI_MODE_GPIO_SYS
@@ -51,18 +69,32 @@ const (
 	INT_EDGE_BOTH    = C.INT_EDGE_BOTH
 )
 
+//use RPi.GPIO's BOARD numbering
+func BOARD(pin int) {
+
+}
+
+//use RPi.GPIO's BCM numbering
+func BCM(pin int) {
+
+}
+
+func Convert(pin int) int {
+	return int(C.wpiPinToGpio(C.int(pin)))
+}
+
 func WiringPiSetup() {
 	if -1 == int(C.wiringPiSetup()) {
 		panic("Failed to setup Pi")
 	}
 }
 
-func PinMode(port int, mode int) {
-	C.my_pinMode(C.int(port), C.int(mode))
+func PinMode(pin int, mode int) {
+	C.my_pinMode(C.int(pin), C.int(mode))
 }
 
-func DigitalWrite(port int, mode int) {
-	C.my_digitalWrite(C.int(port), C.int(mode))
+func DigitalWrite(pin int, mode int) {
+	C.my_digitalWrite(C.int(pin), C.int(mode))
 }
 
 func Delay(ms int) {

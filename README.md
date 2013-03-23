@@ -14,10 +14,10 @@ sudo make install
 go get github.com/hugozhu/rpi
 ```
 
-# GPIO naming
+# GPIO numbering
 
-wiringPi   | Name     | GPIO Pin      | GPIO Pin in Broadcom 
----------- | -------- | ------------  | ------------ 
+wiringPi   | Name     | GPIO.BOARD    | GPIO.BCM
+---------- | -------- | ------------  | --------
 0          |GPIO 0    | 11            | 17 
 1          |GPIO 1    | 12            | 18
 2          |GPIO 2    | 13            | 21
@@ -33,9 +33,10 @@ wiringPi   | Name     | GPIO Pin      | GPIO Pin in Broadcom
 12         |MOSI      | 19            | 10
 13         |MOSO      | 21            | 9
 14         |SCLK      | 23            | 11
-15         |TxD       | 8             | 14
-16         |RxD       | 10            | 15
+15         |TXD       | 8             | 14
+16         |RXD       | 10            | 15
 
+more to read at: [http://hugozhu.myalert.info/2013/03/22/19-raspberry-pi-gpio-port-naming.html](http://hugozhu.myalert.info/2013/03/22/19-raspberry-pi-gpio-port-naming.html)
 
 # Example
 
