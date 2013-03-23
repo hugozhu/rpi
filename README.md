@@ -63,7 +63,7 @@ func main() {
     Delay(400)
     DigitalWrite(BoardToPin(16), HIGH)
 
-    //use raspberry pi board pin numbering, similiar to RPi.GPIO.setmode(GPI.BCM)
+    //use raspberry pi bcm gpio numbering, similiar to RPi.GPIO.setmode(GPI.BCM)
     Delay(400)
     DigitalWrite(GpioToPin(23), LOW)
     Delay(400)
