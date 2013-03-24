@@ -23,7 +23,6 @@ import "C"
 
 import (
 	"fmt"
-	"time"
 )
 
 const (
@@ -209,5 +208,9 @@ func DigitalRead(pin int) int {
 }
 
 func Delay(ms int) {
-	time.Sleep(time.Duration(ms) * time.Millisecond)
+	C.delay(C.uint(ms))
+}
+
+func DelayMicroseconds(microSec int) {
+	C.delayMicroseconds(C.uint(microSec))
 }
