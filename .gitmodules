@@ -1,7 +1,3 @@
 [submodule "WiringPi"]
 	path = WiringPi
 	url = https://github.com/WiringPi/WiringPi.git
-
-[submodule "PCD8544"]
-        path = PCD8544 
-        url = https://github.com/binerry/RaspberryPi/tree/master/libraries/c/PCD8544

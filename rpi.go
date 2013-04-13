@@ -6,6 +6,20 @@ package rpi
 #include <wiringPi.h>
 #include <stdio.h>
 #include <stdlib.h>
+#define nil ((void*)0)
+
+#define GEN_INTERRUPTER(PIN) static void interrupt_handler_##PIN() { \
+	context ctxt;   \
+	ctxt.pin = PIN;  \
+	ctxt.ret = PIN;  \
+	callback_func(goCallback, &ctxt); \
+}
+
+typedef struct context context;
+struct context {
+	int pin;
+	int ret;
+};
 
 static void my_pinMode(int p, int m) {
     pinMode(p,m);
@@ -18,15 +32,50 @@ static void my_digitalWrite(int p, int m) {
 static int my_digitalRead(int p) {
     return digitalRead(p);
 }
+
+static void(*callback_func)(void (*f)(void*), void*);
+
+extern void goCallback(void *);
+
+GEN_INTERRUPTER(0)
+GEN_INTERRUPTER(1)
+GEN_INTERRUPTER(2)
+GEN_INTERRUPTER(3)
+GEN_INTERRUPTER(4)
+GEN_INTERRUPTER(5)
+GEN_INTERRUPTER(6)
+GEN_INTERRUPTER(7)
+
+static int my_wiringPiISR(int pin, int mode) {
+	switch(pin) {
+		case 0: return wiringPiISR(pin, mode, &interrupt_handler_0);
+		case 1: return wiringPiISR(pin, mode, &interrupt_handler_1);
+		case 2: return wiringPiISR(pin, mode, &interrupt_handler_2);
+		case 3: return wiringPiISR(pin, mode, &interrupt_handler_3);
+		case 4: return wiringPiISR(pin, mode, &interrupt_handler_4);
+		case 5: return wiringPiISR(pin, mode, &interrupt_handler_5);
+		case 6: return wiringPiISR(pin, mode, &interrupt_handler_6);
+		case 7: return wiringPiISR(pin, mode, &interrupt_handler_7);
+	}
+
+	return -1;
+}
+
+static void init(void *p) {
+	callback_func = p;
+}
 */
 import "C"
+import "unsafe"
 
 import (
+	"code.google.com/p/rog-go/exp/callback"
+	"errors"
 	"fmt"
 )
 
 const (
-	VERSION = "0.1"
+	VERSION = "0.2"
 	AUTHOR  = "@hugozhu"
 )
 
@@ -167,10 +216,11 @@ func PinToGpio(pin int) int {
 	return int(C.wpiPinToGpio(C.int(pin)))
 }
 
-func WiringPiSetup() {
+func WiringPiSetup() error {
 	if -1 == int(C.wiringPiSetup()) {
-		panic("Failed to setup Pi")
+		return errors.New("wiringPiSetup failed to call")
 	}
+	return nil
 }
 
 /*
@@ -213,4 +263,22 @@ func Delay(ms int) {
 
 func DelayMicroseconds(microSec int) {
 	C.delayMicroseconds(C.uint(microSec))
+}
+
+func WiringPiISR(pin int, mode int) chan int {
+	interrupt_chans[pin] = make(chan int)
+	C.my_wiringPiISR(C.int(pin), C.int(mode))
+	return interrupt_chans[pin]
+}
+
+func init() {
+	C.init(callback.Func)
+}
+
+var interrupt_chans = [64]chan int{}
+
+//export goCallback
+func goCallback(arg unsafe.Pointer) {
+	ctxt := (*C.context)(arg)
+	interrupt_chans[int(ctxt.pin)] <- int(ctxt.ret)
 }
