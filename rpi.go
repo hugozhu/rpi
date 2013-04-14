@@ -248,28 +248,6 @@ func WiringPiSetup() error {
 	return nil
 }
 
-/*
- * Better to stick to one GPIO numbering, not use other setup methods for now
- *
-func WiringPiSetupGpio() {
-	if -1 == int(C.wiringPiSetupSys()) {
-		panic("Failed to setup Pi")
-	}
-}
-
-func WiringPiSetupSys() {
-	if -1 == int(C.wiringPiSetupSys()) {
-		panic("Failed to setup Pi")
-	}
-}
-
-func WiringPiSetupPiFace() {
-	if -1 == int(C.wiringPiSetupPiFace()) {
-		panic("Failed to setup Pi")
-	}
-}
-*/
-
 func PinMode(pin int, mode int) {
 	C.my_pinMode(C.int(pin), C.int(mode))
 }
