@@ -45,6 +45,19 @@ GEN_INTERRUPTER(4)
 GEN_INTERRUPTER(5)
 GEN_INTERRUPTER(6)
 GEN_INTERRUPTER(7)
+GEN_INTERRUPTER(8)
+GEN_INTERRUPTER(9)
+GEN_INTERRUPTER(10)
+GEN_INTERRUPTER(11)
+GEN_INTERRUPTER(12)
+GEN_INTERRUPTER(13)
+GEN_INTERRUPTER(14)
+GEN_INTERRUPTER(15)
+GEN_INTERRUPTER(16)
+GEN_INTERRUPTER(17)
+GEN_INTERRUPTER(18)
+GEN_INTERRUPTER(19)
+GEN_INTERRUPTER(20)
 
 static int my_wiringPiISR(int pin, int mode) {
 	switch(pin) {
@@ -56,8 +69,20 @@ static int my_wiringPiISR(int pin, int mode) {
 		case 5: return wiringPiISR(pin, mode, &interrupt_handler_5);
 		case 6: return wiringPiISR(pin, mode, &interrupt_handler_6);
 		case 7: return wiringPiISR(pin, mode, &interrupt_handler_7);
+		case 8: return wiringPiISR(pin, mode, &interrupt_handler_8);
+		case 9: return wiringPiISR(pin, mode, &interrupt_handler_9);
+		case 10: return wiringPiISR(pin, mode, &interrupt_handler_10);
+		case 11: return wiringPiISR(pin, mode, &interrupt_handler_11);
+		case 12: return wiringPiISR(pin, mode, &interrupt_handler_12);
+		case 13: return wiringPiISR(pin, mode, &interrupt_handler_13);
+		case 14: return wiringPiISR(pin, mode, &interrupt_handler_14);
+		case 15: return wiringPiISR(pin, mode, &interrupt_handler_15);
+		case 16: return wiringPiISR(pin, mode, &interrupt_handler_16);
+		case 17: return wiringPiISR(pin, mode, &interrupt_handler_17);
+		case 18: return wiringPiISR(pin, mode, &interrupt_handler_18);
+		case 19: return wiringPiISR(pin, mode, &interrupt_handler_19);
+		case 20: return wiringPiISR(pin, mode, &interrupt_handler_20);
 	}
-
 	return -1;
 }
 
