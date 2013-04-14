@@ -97,6 +97,7 @@ import (
 	"code.google.com/p/rog-go/exp/callback"
 	"errors"
 	"fmt"
+	"sync"
 )
 
 const (
@@ -222,6 +223,8 @@ const (
 	INT_EDGE_BOTH    = C.INT_EDGE_BOTH
 )
 
+var mutex = sync.Mutex
+
 //use RPi.GPIO's BOARD numbering
 func BoardToPin(pin int) int {
 	if pin < 1 || pin >= len(board2pin) {
@@ -269,7 +272,11 @@ func DelayMicroseconds(microSec int) {
 }
 
 func WiringPiISR(pin int, mode int) chan int {
-	interrupt_chans[pin] = make(chan int)
+	mutex.Lock()
+	defer mutex.Unlock()
+	if interrupt_chans[pin] == nil {
+		interrupt_chans[pin] = make(chan int)
+	}
 	C.my_wiringPiISR(C.int(pin), C.int(mode))
 	return interrupt_chans[pin]
 }
