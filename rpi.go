@@ -223,7 +223,7 @@ const (
 	INT_EDGE_BOTH    = C.INT_EDGE_BOTH
 )
 
-var mutex = sync.Mutex
+var mutex = &sync.Mutex{}
 
 //use RPi.GPIO's BOARD numbering
 func BoardToPin(pin int) int {
