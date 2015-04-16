@@ -94,7 +94,7 @@ import "C"
 import "unsafe"
 
 import (
-	"bitbucket.org/sndnvaps/callback"
+	"bitbucket.org/sndnvaps/callback/exp/callback"
 	"errors"
 	"fmt"
 	"sync"
