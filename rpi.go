@@ -94,7 +94,7 @@ import "C"
 import "unsafe"
 
 import (
-	"code.google.com/p/rog-go/exp/callback"
+	"bitbucket.org/sndnvaps/callback"
 	"errors"
 	"fmt"
 	"sync"
