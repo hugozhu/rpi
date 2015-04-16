@@ -33,6 +33,10 @@ static int my_digitalRead(int p) {
     return digitalRead(p);
 }
 
+static void my_pullUpDnControl(int pin, int pud) {
+          pullUpDnControl(pin,pud);
+}
+
 static void(*callback_func)(void (*f)(void*), void*);
 
 extern void goCallback(void *);
@@ -261,6 +265,10 @@ func DigitalWrite(pin int, mode int) {
 
 func DigitalRead(pin int) int {
 	return int(C.my_digitalRead(C.int(pin)))
+}
+
+func PullUpDnControl(pin int ,pud int) {
+	C.my_pullUpDnControl(C.int(pin),C.int(pud))
 }
 
 func Delay(ms int) {
