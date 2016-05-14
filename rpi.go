@@ -94,7 +94,7 @@ import "C"
 import "unsafe"
 
 import (
-	"code.google.com/p/rog-go/exp/callback"
+	"github.com/rogpeppe/rog-go/tree/master/exp/callback"
 	"errors"
 	"fmt"
 	"sync"
