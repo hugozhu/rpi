@@ -40,8 +40,8 @@ more to read at: [http://hugozhu.myalert.info/2013/03/22/19-raspberry-pi-gpio-po
 
 # Sample codes
 
-## lcd.go
-```
+## `lcd.go`
+```go
 package main
 
 import (
