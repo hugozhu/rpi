@@ -4,6 +4,7 @@ package rpi
 #cgo LDFLAGS: -lwiringPi
 
 #include <wiringPi.h>
+#include <softPwm.h>
 #include <stdio.h>
 #include <stdlib.h>
 #define nil ((void*)0)
@@ -22,11 +23,20 @@ struct context {
 };
 
 static void my_pinMode(int p, int m) {
-    pinMode(p,m);
+    if (m == PWM_OUTPUT) {
+        softPwmCreate(p,0,100);
+    }
+    else {
+        pinMode(p,m);
+    }
 }
 
-static void my_digitalWrite(int p, int m) {
-    digitalWrite(p,m);
+static void my_digitalWrite(int p, int m, int v) {
+    if (v < 0) {
+        digitalWrite(p,m);
+    } else {
+        softPwmWrite(p,v);
+    }
 }
 
 static int my_digitalRead(int p) {
@@ -94,9 +104,9 @@ import "C"
 import "unsafe"
 
 import (
-	"github.com/rogpeppe/rog-go/tree/master/exp/callback"
 	"errors"
 	"fmt"
+	"github.com/rogpeppe/rog-go/tree/master/exp/callback"
 	"sync"
 )
 
@@ -255,8 +265,8 @@ func PinMode(pin int, mode int) {
 	C.my_pinMode(C.int(pin), C.int(mode))
 }
 
-func DigitalWrite(pin int, mode int) {
-	C.my_digitalWrite(C.int(pin), C.int(mode))
+func DigitalWrite(pin int, mode int, pwmval int) {
+	C.my_digitalWrite(C.int(pin), C.int(mode), C.int(pwmval))
 }
 
 func DigitalRead(pin int) int {
